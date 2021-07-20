@@ -20,6 +20,12 @@ const nav = [
       { text: '尚硅谷', link: '/route/atguigu/base01' }
     ],
   },
+  {
+    text: '进阶',
+    items: [
+      { text: 'Scss', link: '/advance/scss/base01' }
+    ],
+  },
   { text: '读书笔记', link: '/readingNote/' },
   { text: '问题', link: '/issue/' },
   {
