@@ -1,0 +1,2 @@
+# my-docs
+study notes
