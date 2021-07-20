@@ -384,3 +384,59 @@ $icons: success error warning;
 }
 ```
 ### @while
+``` scss
+$i: 6;
+@while $i > 0 {
+  .item-#{$i} {
+    width: 5px * $1;
+  }
+  $i: $i - 2;
+}
+```
+``` css
+.item-6 {
+  width: 30px;
+}
+.item-4 {
+  width: 20px;
+}
+.item-2 {
+  width: 10px;
+}
+```
+## 自定义函数
+``` scss 
+@function 名称 (参数1,参数2) {
+  ...
+}
+```
+``` scss 
+$colors: (light: #ffffff, dark: #000000);
+@function color($key) {
+  @return map-get($colors, $key)
+}
+body {
+  background-color: color(light);
+}
+```
+``` css
+body {
+  background-color: #ffffff;
+}
+```
+## 警告与错误
+- `@warn`
+- `@error`
+``` scss 
+$colors: (light: #ffffff, dark: #000000);
+@function color($key) {
+  @if not map-has-key($colors, $key) {
+    @warn "没有找到#{$key}"   // 警告
+//  @error "没有找到#{$key}"  // 错误
+  }
+  @return map-get($colors, $key)
+}
+body {
+  background-color: color(lin);
+}
+```
