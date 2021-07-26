@@ -22,15 +22,15 @@ Sass有两套语法:
 ## 环境配置
 > less,scss(sass)和stylus代码不能被浏览器直接解析,必须先将它们编译成css代码,现有框架已经集成,相关配置会自动帮我们生成
 ### 命令行编译工具(不依赖编辑器)
-- `Node`环境下的`node-sass`        (拿来就用)
-- `Node`环境下的`dart-sass`        (需要配置,性能好) 
+- `Node`环境下的`node-sass`        
+- `Node`环境下的`dart-sass`        推荐使用
 - `Ruby`环境下的`sass`模块
 - `Dart`环境下的`sass`模块
 ### 命令行编译工具(依赖编辑器)
 - `webstorm`    安装`sass`插件
 - `vsCode`      安装`Easy Sass`(编译)和`Sass`(代码提示)插件
 ## 安装
-### `npm`与`yarn`
+>`npm`与`yarn`
 ``` sh
 npm init                    # 初始化
 npm install xx              # 本地安装
@@ -51,8 +51,15 @@ yarn add xx -D              # 将安装包加入到devDependencies
 yarn remove xx              # 删除
 yarn global add xx          # 全局安装依赖
 ```
-#### node-sass
+### node-sass
 ``` sh
 npm install -g node-sass    # 全局安装
 node-sass -v                # 可以看是否安装成功
+```
+### dart-sass  
+>- sass官方已经将`dart-sass`作为未来主要的的开发方向
+>- `dart-sass`之所以容易安装，主要是因为它会被编译成纯 js，这样就可以直接在的 node 环境中使用
+>- 替换 `node-sass` 之后有一个地方需要注意，就是它不再支持之前 `sass `的那种 `/deep/` 写法，需要统一改为 `::v-deep` 的写法
+``` sh
+npm install sass -S -D
 ```
