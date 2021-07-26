@@ -1,10 +1,13 @@
 <template>
+<div>
   <div id="layout">
     <a class="link" v-for="it in data" :key="it.id" @click="handleJump(it.path)">
       <div class="my-title">{{it.title}}</div>
       <p class="content">{{it.description}}</p>
     </a>
   </div>
+</div>
+
 </template>
 
 <script>

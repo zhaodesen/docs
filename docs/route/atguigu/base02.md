@@ -212,3 +212,28 @@ border-right: none;
 }
 ```
 ### 盒子的垂直布局
+> 如果子元素的大小超过了父元素,子元素会从父元素溢出,使用`overflow`属性来设置父元素如何处理溢出的子元素
+> - 可选值
+>   - `visible`默认值,子元素从父元素中溢出,在父元素外部显示
+>   - `hidden`溢出内容会被隐藏
+>   - `scroll`使父元素可以水平/垂直滚动
+>   - `auto` 根据内容自适应生成滚动条
+> - `overflow-x`,`overflow-y`分别设置溢出部分的水平和垂直,值同上
+``` html
+<div class="box1">
+  <div class="box2"></div>
+</div>
+```
+``` css
+.box1 {
+  width: 300px;
+  height: 200px;
+  background-color: aqua;
+  overflow: hidden;
+}
+.box2 {
+  width: 200px;
+  height: 400px;
+  background-color: rgb(187, 123, 40);
+}
+```

@@ -1,8 +1,7 @@
 ---
-# layout: tst
 home: true
 # heroImage: /hero.png
-#heroText: 大前端
+heroText: 志在必得
 tagline: 业精于勤荒于嬉,行成于思毁于随
 actionText: 快速进入 →
 actionLink: /life/
