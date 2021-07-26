@@ -85,7 +85,7 @@ $add5: "a" + "b"; // "ab"
 $add6: "a" + b;	  // "ab"
 $add7: a + "b";	  // ab
 $add8: a + b;	  // ab
-// 数字和字符串相加 第一位有引号，结果必为引号；第一位对应数字非数字且最后一位带有引号，则结果必为引号
+// 数字和字符串相加 
 $add9: 1 + a;	// 1a
 $adda: a + 1;	// a1
 $addb: "1" + a; // "1a"
@@ -95,8 +95,6 @@ $adde: a + "1"; // a1
 $addf: 1 + "1"; // "11"
 ```
 ### 减运算符
-- 每个字段必须前部分为数字，且两个字段只能一个后部分是字符(因为此时后缀被当被单位看待了)。
-- 只要其中一个值首位不为数字的，结果就按顺序去除空格后拼接起来
 ``` scss
 $add1: 1 - 2;	// -1
 $add2: 1 - 2px; // -1px
@@ -109,7 +107,6 @@ $sub3: "a" - 1;// "a"-1
 $sub4: a - "1";// a-"1"
 ```
 ### 乘运算符
-- 每个字段必须前部分为数字，且两个字段只能一个后部分是字符(因为此时后缀被当被单位看待了)。其余编译不通过
 
 ``` scss
 $num1: 1 * 2;    // 2
@@ -121,24 +118,19 @@ $num5: 1 * 2abc; // 2abc
 ```
 ### 除运算符
 - 不会四舍五入，精确到小数点后5位
-- 每个字段必须前部分为数字，且当前者只是单纯数字无单位时，后者(除数)后部分不能有字符。其余结果就按顺序去除空格后拼接起来。(因为此时后缀被当被单位看待了)
 ### `%`运算符
 - 值与"%"之间必须要有空格，否则会被看做字符串
 ### 关系运算符
-- 两端必须为数字 或 前部分数字后部分字符
-- 返回值：true or false
 ``` scss
 $a: 1 > 2; // false
 $a: 1 > 2; // true
 $a: 1 >= 2; // false
 $a: 1 <= 2; // true
-5px > 3px                   // true
-5px < 3px                   // false
+$a: 5px > 3px;    // true
+$a: 5px < 3px;     // false
 ```
 ### 相等运算符
 - 相等运算 `==, !=` 可用于所有数据类型
-- 返回值：true or false
-- 前部分为不带引号数字时，对比的仅仅是数字部分；反之，忽略引号，要求字符一一对应
 ``` scss
 $a: 1 == 1px; // true
 $b: "a" == a; // true
@@ -153,13 +145,12 @@ $a: 1>0 and 0>=5; // fasle
 not(5px > 3px)              // fale   同!
 ```
 ### 颜色值运算
->颜色值的运算是分段计算进行的，也就是分别计算红色，绿色，以及蓝色的值
+>颜色值的运算是分段计算进行的，也就是分别计算红，绿，蓝的值
 - `颜色值与颜色值`
 ``` scss
 p {
   color: #010203 + #040506;
 }
-// 计算 01 + 04 = 05 02 + 05 = 07 03 + 06 = 09，然后编译为
  p {
   color: #050709; 
 }
@@ -169,15 +160,13 @@ p {
 p {
   color: #010203 * 2;
 }
-
-// 计算 01 * 2 = 02 02 * 2 = 04 03 * 2 = 06，然后编译为
 p {
   color: #020406; 
 }
 ```
 - `RGB和HSL`
 ``` scss
-// 如果颜色值包含 alpha channel（rgba 或 hsla 两种颜色值），必须拥有相等的 alpha 值才能进行运算，因为算术运算不会作用于 alpha 值。
+// 如果颜色值包含rgba 或 hsla 两种颜色值必须拥有相等的 alpha 值才能进行运算，因为算术运算不会作用于 alpha 值。
 p {
   color: rgba(255, 0, 0, 0.75) + rgba(0, 255, 0, 0.75);
 }
@@ -260,9 +249,7 @@ a {
 }
 ```
 ``` css
-a :hover {
-  color: red;
-}
+a :hover {color: red;}
 ```
 ``` scss 
 // 加`&`
@@ -273,9 +260,7 @@ a {
 }
 ```
 ``` css
-a:hover {
-  color: red;
-}
+a:hover {color: red;}
 ```
 ## Interpolation 插值语法
 - 通过 `#{} `插值语句可以在选择器、属性名和属性值中使用变量。
@@ -368,7 +353,9 @@ Sass 中 `@media` 指令与 CSS 中用法一样，只是增加了一点额外的
 // 编译为：
 @media screen and (orientation: landscape) {
   .sidebar {
-    width: 500px; } }
+    width: 500px; 
+  } 
+}
 ``` 
 
 `@media` 甚至可以使用 SassScript（比如变量，函数，以及运算符）代替条件的名称或者值
@@ -415,146 +402,6 @@ $value: 1.5;
   background-color: #20a0ff;
 }
 ```
-在设计网页的时候常常遇到这种情况：一个元素使用的样式与另一个元素完全相同，但又添加了额外的样式。
-
-总的来看：支持层叠继承、多继承、允许延伸任何定义给单个元素的选择器（但是允许不一定好用）
-
-- `基本延伸`
-
-``` scss
-.error {
-  border: 1px #f00;
-  background-color: #fdd;
-}
-.seriousError {
-  @extend .error;
-  border-width: 3px;
-}
-// 上面代码的意思是将 .error 下的所有样式继承给 .seriousError，border-width: 3px; 是单独给 .seriousError 设定特殊样式，这样，使用 .seriousError 的地方可以不再使用 .error。
-``` 
-
-`@extend` 的作用是将重复使用的样式 (`.error`) 延伸 (extend) 给需要包含这个样式的特殊样式（`.seriousError`）
-
-注意理解以下情况：
-
-``` scss
-.error {
-  border: 1px #f00;
-  background-color: #fdd;
-}
-.error.intrusion {
-  background-image: url("/image/hacked.png");
-}
-.seriousError {
-  @extend .error;
-  border-width: 3px;
-}
-// .error, .seriousError {
-  border: 1px #f00;
-  background-color: #fdd; }
-
-.error.intrusion, .seriousError.intrusion {
-  background-image: url("/image/hacked.png"); }
-
-.seriousError {
-  border-width: 3px; }
-``` 
-
-当合并选择器时，`@extend` 会很聪明地避免无谓的重复，`.seriousError.seriousError` 将编译为 `.seriousError`，不能匹配任何元素的选择器也会删除。
-
-
-
--  `延伸复杂的选择器`：Class 选择器并不是唯一可以被延伸 (extend) 的，Sass 允许延伸任何定义给单个元素的选择器，比如 `.special.cool`，`a:hover` 或者 `a.user[href^="http://"]` 等
-
-
-
-- ` 多重延伸`：同一个选择器可以延伸给多个选择器，它所包含的属性将继承给所有被延伸的选择器
-
-
-
-- `继续延伸`：当一个选择器延伸给第二个后，可以继续将第二个选择器延伸给第三个
-
-
-
-- `*选择器列`：暂时不可以将选择器列 (Selector Sequences)，比如 `.foo .bar` 或 `.foo + .bar`，延伸给其他元素，但是，却可以将其他元素延伸给选择器列。
-
-尽量不使用`合并选择器列`，因为如果凭个人推理的话，会出现排列组合的情况，所以SASS编译器只会保留有用的组合形式，但依旧会存在排列组合的情况，有可能会留下隐患。
-
-1. 当两个列合并时，如果没有包含相同的选择器，将生成两个新选择器：第一列出现在第二列之前，或者第二列出现在第一列之前
-
-   ``` scss
-   #admin .tabbar a {
-     font-weight: bold;
-   }
-   #demo .overview .fakelink {
-     @extend a;
-   }
-   // 编译为：
-   #admin .tabbar a,
-   #admin .tabbar #demo .overview .fakelink,
-   #demo .overview #admin .tabbar .fakelink {
-     font-weight: bold; }
-   ``` 
-
-   
-
-2. 如果两个列包含了相同的选择器，相同部分将会合并在一起，其他部分交替输出
-
-   ``` scss
-   #admin .tabbar a {
-     font-weight: bold;
-   }
-   #admin .overview .fakelink {
-     @extend a;
-   }
-   // 编译为
-   #admin .tabbar a,
-   #admin .tabbar .overview .fakelink,
-   #admin .overview .tabbar .fakelink {
-     font-weight: bold; }
-   ``` 
-
-   
-
-- `在指令中延伸`
-
-在指令中使用 `@extend` 时（比如在 `@media` 中）有一些限制：Sass 不可以将 `@media` 层外的 CSS 规则延伸给指令层内的 CSS.
-
-
-
--  `%placeholder`为选择器占位符，配合`@extend-Only选择器`使用。
-
-效果：只定义了样式，但不会对原有选择器匹配的元素生效
-
-``` scss
-// example1:
-%img {
-    color: red;
-}
-.path{
-    @extend %img;
-}
-// 编译后：
-.path {
-  color: red;
-}
-``` 
-
-``` scss
-// example2:
-#context a%extreme {
-  color: blue;
-  font-weight: bold;
-  font-size: 2em;
-}
-// 编译后：
-.notice {
-  @extend %extreme;
-}
-
-// 注：必须是"."和"#"选择器
-``` 
-
 
 ## `@at-root`
 
@@ -610,7 +457,8 @@ p {
 
 // compile:
 p{
-    color: green;}
+  color: green;
+}
 ``` 
 ### `@if`
 ``` scss
