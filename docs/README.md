@@ -1,4 +1,5 @@
 ---
+# layout: tst
 home: true
 # heroImage: /hero.png
 #heroText: 大前端
@@ -16,5 +17,5 @@ actionLink: /life/
 ---
 
 <ClientOnly>
-  <tst />
+  <QuickNavigation />
 </ClientOnly>

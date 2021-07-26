@@ -23,7 +23,7 @@ const nav = [
   {
     text: '进阶',
     items: [
-      { text: 'Scss', link: '/advance/scss/base01' }
+      { text: 'Sass', link: '/advance/scss/base01' }
     ],
   },
   { text: '读书笔记', link: '/readingNote/' },
