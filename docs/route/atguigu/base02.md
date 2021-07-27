@@ -379,3 +379,67 @@ border-radius: 50%;
 ::: warning 高度塌陷
 在浮动布局中,父元素的高度默认被子元素撑开,当子元素设置浮动后,其脱离了文档流,导致父元素的高度丢失,同级的元素上移,页面布局混乱
 :::
+解决方式一: 开启`BFC`
+``` html
+<div class="outer">
+  <div class="inner"></div>
+</div>
+```
+``` css
+.outer{
+  border: 1px solid red;
+  /*开启BFC,因为开启BFC的元素可以包含浮动的子元素 */
+  overflow: hidden;
+}
+.inner{
+  width: 100px;
+  height: 100px;
+  background-color: aqua;
+  /* 设置浮动后塌陷了 */
+  float: left;  
+}
+```
+解决方式二: 
+
+## `BFC`
+示例一:
+``` html
+<div class="box1"></div>
+<div class="box2"></div>
+```
+``` css
+.box1 {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  float: left;
+}
+.box2 {
+  width: 100px;
+  height: 100px;
+  background-color: rgb(46, 177, 42);
+  /* .box2会被遮盖,开启BFC,就不会被浮动的元素覆盖*/
+  overflow: hidden; 
+}
+```
+示例二:
+``` html
+<div class="box1">
+  <div class="box2"></div>
+</div>
+```
+``` css
+.box1 {
+  width: 200px;
+  height: 200px;
+  background-color: red;
+    /* 子元素的外边距传递给了父元素,开启BFC的元素子元素和父元素外边距不会重叠 */
+  overflow: hidden;
+}
+.box2 {
+  width: 100px;
+  height: 100px;
+  background-color: rgb(46, 177, 42);
+  margin-top: 100px;
+}
+```
