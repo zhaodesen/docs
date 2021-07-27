@@ -115,25 +115,25 @@ export default {
    background-color: rgba(180, 240, 178, 0.7);
 }
 #layout > .link:nth-of-type(2) {
-   background-color: rgba(239, 240, 178, 0.7);
+   background-color: rgba(180, 240, 178, 0.7);
 }
 #layout > .link:nth-of-type(3) {
-   background-color: rgba(178, 240, 232, 0.5);
+   background-color: rgba(180, 240, 178, 0.808);
 }
 #layout > .link:nth-of-type(4) {
    background-color: rgba(178, 189, 240, 0.5);
 }
 #layout > .link:nth-of-type(5) {
-   background-color: rgba(230, 178, 240, 0.5);
+   background-color: rgba(178, 189, 240, 0.5);
 }
 #layout > .link:nth-of-type(6) {
-   background-color: rgba(240, 178, 207, 0.5);
+   background-color: rgba(178, 189, 240, 0.5);
 }
 #layout > .link:nth-of-type(7) {
-   background-color: rgba(240, 178, 178, 0.5);
+   background-color: rgba(178, 233, 240, 0.5);
 }
 #layout > .link:nth-of-type(8) {
-   background-color: rgba(240, 178, 178, 0.5);
+   background-color: rgba(178, 233, 240, 0.5);
 }
 #layout > .link:nth-of-type(9) {
    background-color: rgba(178, 233, 240, 0.5);

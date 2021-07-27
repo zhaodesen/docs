@@ -4,7 +4,7 @@ title: CSS
 ---
 - 层叠样式表
 - 负责网页的表现
-## 修改元素的样式
+## 元素的样式
 - `内联样式(行内样式)`
   - 样式只对当前元素有效
   - 开发中不要使用内联样式
@@ -213,12 +213,12 @@ border-right: none;
 ```
 ### 盒子的垂直布局
 > 如果子元素的大小超过了父元素,子元素会从父元素溢出,使用`overflow`属性来设置父元素如何处理溢出的子元素
-> - 可选值
->   - `visible`默认值,子元素从父元素中溢出,在父元素外部显示
->   - `hidden`溢出内容会被隐藏
->   - `scroll`使父元素可以水平/垂直滚动
->   - `auto` 根据内容自适应生成滚动条
-> - `overflow-x`,`overflow-y`分别设置溢出部分的水平和垂直,值同上
+ - 可选值
+   - `visible`默认值,子元素从父元素中溢出,在父元素外部显示
+   - `hidden`溢出内容会被隐藏
+   - `scroll`使父元素可以水平/垂直滚动
+   - `auto` 根据内容自适应生成滚动条
+ - `overflow-x`,`overflow-y`分别设置溢出部分的水平和垂直,值同上
 ``` html
 <div class="box1">
   <div class="box2"></div>
@@ -237,3 +237,145 @@ border-right: none;
   background-color: rgb(187, 123, 40);
 }
 ```
+> **相邻的垂直方向外边距**会发生重叠
+- 兄弟元素
+  - 如果都是正值,取最大值
+  - 如果一正一负,取两者的和
+  - 如果都是负,取两者中绝对值最大的
+``` html
+<div class="box1"></div>
+<div class="box2"></div>
+```
+``` css
+.box1 {
+  width: 200px;
+  height: 100px;
+  background-color: aqua;
+  margin-bottom: 50px;
+}
+.box2 {
+  width: 200px;
+  height: 100px;
+  background-color: aquamarine;
+  margin-top: 20px;
+}
+```
+- 父子元素
+  - 子元素会传递给父元素上外边距,会影响页面布局
+    - 子元素使用`padding-top`,但父元素需要改高度
+    - 给父元素一个边框,这样就不相邻了,但父元素的高和子元素的上外边距需要改
+``` html
+<div class="box1">
+  <div class="box2"></div>
+</div>
+```
+``` css
+.box1 {
+  width: 200px;
+  height: 100px;
+  background-color: aqua;
+}
+.box2 {
+  width: 50px;
+  height: 50px;
+  background-color: aquamarine;
+  margin-top: 100px;  
+}
+```
+### 行内元素的盒模型
+>行内元素的盒模型和块元素一样,不过有以下区别:
+- 不能通过`width`和`height`设置内容区的宽高,由它里面的内容决定
+- 可以设置`padding,margin,border`,,相邻垂直方向不会影响页面布局
+  - `margin` 只有左右生效,且不会重叠
+>`display`用来设置元素显示的类型
+-  `inline`   行内元素
+-  `block`    块元素
+-  `inline-block` 行内块元素
+   - 既可以通过`width`和`height`设置内容区的宽高,有不会独占一行
+- `table` 表格
+- `none`  隐藏元素,不占据空间
+  - `visibility` 用来设置元素的显示状态
+    - `visible` 默认值,正常显示
+    - `hidden` 隐藏元素,但依然占有空间
+## 浏览器的默认样式
+取消浏览器默认样式:
+- 方式一:
+``` css
+*{
+  margin: 0;
+  padding: 0
+}
+ul{
+  list-style: none;
+}
+```
+- 方式二: 
+``` html
+<!-- 对不同的浏览器在渲染网页元素的时候形式更统一 -->
+<link rel="stylesheet" href="normalize.css">
+<!-- 去除了浏览器的默认样式 -->
+<link rel="stylesheet" href="reset.css">
+```
+## 盒子大小
+默认情况下,`盒子可见框`的大小由`内容区`,`内边距`和`边框`共同决定
+- `box-sizing` 用来设置盒子大小的计算方式
+  - `content-box`  默认值,`width`和`height`设置内容区的宽高
+  - `border-box`   `width`和`height`设置`盒子可见框`的宽高
+
+## 轮廓/阴影/圆角
+
+``` css
+/*
+ 设置元素的轮廓,用法和border一样
+ 轮廓不会影响到可见框的大小 
+ */
+outline: 1px solid red
+```
+
+``` css
+/*
+用来设置元素阴影
+轮廓不会影响到可见框的大小 
+第一个值 水平偏移量  正值向右 负值向左
+第二个值 垂直偏移量  正值向下 负值向上
+第三个值 阴影模糊半径
+第三个值 阴影颜色
+ */
+box-shadow: 10px 10px 10px red;
+```
+``` css
+/* 圆角  */
+border-radius: 50%;
+```
+## 浮动
+- `float`属性设置元素的浮动
+  - `none` 默认值,元素不浮动
+  - `left` 元素向左移动
+  - `right`元素向右移动 
+
+- 浮动的特点
+  - 当一个元素浮动之后，它会被移出正常的文档流，然后向左或者向右平移，一直平移直到碰到了所处的容器的边框，或者碰到另外一个浮动的元素
+  - 如果浮动元素的上边是一个没有浮动的块元素,则浮动元素无法上移
+  - 多个浮动元素在一行放不开会像行内元素一样另起一行
+  - 浮动元素不会越级排列
+
+- 浮动主要作用是制作一些水平方向的布局
+- 浮动不会盖住文字,文字会自动环绕在浮动元素的周围
+  - 利用这个特点可以设置文字环绕图片的效果 
+- 脱离文档流后,块元素和行内元素拥有了类似于`行内块元素`的特性
+``` html
+ <div class="main"></div>
+```
+``` css
+/* 设置了浮动,这个div已经不在body中了,独立了 */
+.main {
+  width: 200px;
+  height: 200px;
+  background-color: antiquewhite;
+  float: left;
+}
+```
+- 浮动产生的问题
+::: warning 高度塌陷
+在浮动布局中,父元素的高度默认被子元素撑开,当子元素设置浮动后,其脱离了文档流,导致父元素的高度丢失,同级的元素上移,页面布局混乱
+:::
