@@ -3,7 +3,7 @@ autoGroup-1: 基础
 title: 起步
 ---
 ## 图解
-![vue官网logo](../../.vuepress/public/git.png)
+![git](../../.vuepress/public/git.png)
 ## 基本命令
 ``` sh
 git init              # 初始化Git仓库 空目录 or 有文件的目录都可以

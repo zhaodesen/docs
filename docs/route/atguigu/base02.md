@@ -4,7 +4,7 @@ title: CSS
 ---
 - 层叠样式表
 - 负责网页的表现
-## 元素的样式
+## CSS编写的位置
 - `内联样式(行内样式)`
   - 样式只对当前元素有效
   - 开发中不要使用内联样式
@@ -388,7 +388,7 @@ border-radius: 50%;
 ``` css
 .outer{
   border: 1px solid red;
-  /*开启BFC,因为开启BFC的元素可以包含浮动的子元素 */
+  /*开启BFC,计算BFC的高度时，浮动元素也参与计算 */
   overflow: hidden;
 }
 .inner{
@@ -402,7 +402,29 @@ border-radius: 50%;
 解决方式二: 
 
 ## `BFC`
-示例一:
+### 定义
+1. 首先要知道`HTML`元素在历史上被分类为块级元素(`block-level elements`)和行内元素(`inline-level elements`)
+2. 格式化上下文(`Formatting Context`)是页面的一块渲染区域,有一套渲染规则,比较常见的格式化上下文有
+  - `Block Fomatting Context`,简称`BFC`
+  - `Inline Fomatting Context`,简称`IFC`
+3. `block-level elements`会生成`block-level box` ,并参与`Block Fomatting Context`
+4. `inline-level elements`会生成`inline-level box` ,并参与`Inline Fomatting Context`
+###  `BFC`的布局规则
+> 块格式化上下文包含创建它的元素内部的所有内容
+- 内部的盒子会在垂直方向，一个接一个地放置。
+- 同一个`BFC`的两个相邻盒子的`margin`会发生重叠。
+- `BFC`的区域不会与`float box`重叠。
+- `BFC`就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素,外面的元素也影响不到里面的子元素
+- 计算`BFC`的高度时，浮动元素也参与计算。
+### 创建块格式化上下文
+- 根元素`<html>`
+- 浮动元素（元素的 `float` 不是` none`）
+- 绝对定位元素（元素的 `position` 为 `absolute` 或 `fixed`）
+- `overflow` 值不为 `visible` 的块元素
+- `display: flow-root` 无副作用
+- ...
+### 示例
+1. 同一个 `BFC` 下外边距会发生折叠,如果想要避免外边距的重叠，可以将其放在不同的` BFC` 容器中。
 ``` html
 <div class="box1"></div>
 <div class="box2"></div>
@@ -418,11 +440,10 @@ border-radius: 50%;
   width: 100px;
   height: 100px;
   background-color: rgb(46, 177, 42);
-  /* .box2会被遮盖,开启BFC,就不会被浮动的元素覆盖*/
   overflow: hidden; 
 }
 ```
-示例二:
+1. 子元素的外边距传递给了父元素,BFC的元素子元素和父元素外边距不会重叠 
 ``` html
 <div class="box1">
   <div class="box2"></div>
@@ -433,7 +454,6 @@ border-radius: 50%;
   width: 200px;
   height: 200px;
   background-color: red;
-    /* 子元素的外边距传递给了父元素,开启BFC的元素子元素和父元素外边距不会重叠 */
   overflow: hidden;
 }
 .box2 {
