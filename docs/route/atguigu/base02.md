@@ -379,7 +379,7 @@ border-radius: 50%;
 ::: warning 高度塌陷
 在浮动布局中,父元素的高度默认被子元素撑开,当子元素设置浮动后,其脱离了文档流,导致父元素的高度丢失,同级的元素上移,页面布局混乱
 :::
-解决方式一: 开启`BFC`
+解决方式一: 创建`BFC`
 ``` html
 <div class="outer">
   <div class="inner"></div>
@@ -399,9 +399,80 @@ border-radius: 50%;
   float: left;  
 }
 ```
-解决方式二: 
-
-## `BFC`
+解决方式二: 使用`clear`属性,作用是清除浮动元素对当前元素所产生的的影响
+> 可选值:
+> - `left` 清除左侧浮动元素对当前元素的影响
+> - `right` 清除右侧浮动元素对当前元素的影响
+> - `both` 清除两侧中最大影响的那侧
+> - 原理是设置清除浮动之后,浏览器会自动为元素添加一个上外边距,以使其位置不受其他元素的影响
+``` html
+<div id="box1">
+  <div id="box2"></div>
+</div>
+```
+``` css
+#box1{
+ border: 1px solid red;
+}
+#box2{
+  width: 100px;
+  height: 100px;
+  background-color: springgreen;
+  float: left;
+}
+/* ::after 默认情况下是行内元素,所以需要将他装换为块元素,才能撑起高度 */
+#box1::after{ 
+  content: '';
+  display: block;
+  clear: left;
+}
+```
+::: warning 外边距重叠
+父子元素在垂直方向外边距重叠时,子元素设置`margin-top`值会传递给父元素
+:::
+``` html
+<div id="box1">
+  <div id="box2"></div>
+</div>
+```
+``` css
+#box1{
+width: 100px;
+height: 100px;
+background-color: red;
+}
+#box2{
+  width: 50px;
+  height: 50px;
+  background-color: springgreen;
+  margin-top: 50px;
+}
+```
+![外边距重叠](../../.vuepress/public/example07.png)
+> 使用`::before` + `display: table` 可以解决这种问题
+``` css
+#box1::before{
+  content: '';
+  display: table;
+}
+```
+::: tip 多功能样式
+`clearfix` 这个样式可以同时解决高度塌陷和外边距重叠的问题
+:::
+``` html
+<div id="box1 clearfix">
+  <div id="box2"></div>
+</div>
+```
+``` css
+.clearfix::before,
+.clearfix::after{
+  content: '';
+  display: table;
+  clear: both;
+}
+```
+## BFC
 ### 定义
 1. 首先要知道`HTML`元素在历史上被分类为块级元素(`block-level elements`)和行内元素(`inline-level elements`)
 2. 格式化上下文(`Formatting Context`)是页面的一块渲染区域,有一套渲染规则,比较常见的格式化上下文有
@@ -424,42 +495,122 @@ border-radius: 50%;
 - `display: flow-root` 无副作用
 - ...
 ### 示例
-1. 同一个 `BFC` 下外边距会发生折叠,如果想要避免外边距的重叠，可以将其放在不同的` BFC` 容器中。
+> 1.同一个 `BFC` 下外边距会发生折叠
 ``` html
-<div class="box1"></div>
-<div class="box2"></div>
+<p></p>
+<p></p>
 ```
 ``` css
-.box1 {
+p{
   width: 100px;
   height: 100px;
-  background-color: red;
-  float: left;
-}
-.box2 {
-  width: 100px;
-  height: 100px;
-  background-color: rgb(46, 177, 42);
-  overflow: hidden; 
+  background-color: aquamarine;
+  margin: 20px;
 }
 ```
-1. 子元素的外边距传递给了父元素,BFC的元素子元素和父元素外边距不会重叠 
+![示例01](../../.vuepress/public/example01.png)
+>因为两个 div 元素都处于同一个 BFC 容器下 (根元素`<html>`),如果想要避免外边距的重叠，可以将其放在不同的` BFC` 容器中
+``` html
+<div>
+  <p></p>
+</div>
+<div>
+  <p></p>
+</div>
+```
+``` css
+div{
+  overflow: hidden;
+}
+p{
+  width: 100px;
+  height: 100px;
+  background-color: aquamarine;
+  margin: 20px;
+}
+```
+![示例02](../../.vuepress/public/example02.png)
+> 2. BFC 可以包含浮动的元素（清除浮动）
 ``` html
 <div class="box1">
   <div class="box2"></div>
 </div>
 ```
 ``` css
-.box1 {
-  width: 200px;
-  height: 200px;
-  background-color: red;
-  overflow: hidden;
+.box1{
+  border: 1px solid red;
 }
-.box2 {
+.box2{
   width: 100px;
   height: 100px;
-  background-color: rgb(46, 177, 42);
-  margin-top: 100px;
+  background-color: seagreen;
+  float: left;
+}
+``` 
+![示例03](../../.vuepress/public/example03.png)
+>由于容器内元素浮动，脱离了文档流,导致父元素高度塌陷,如果触发容器的BFC,容器便会包裹着浮动元素
+``` html
+<div class="box1">
+  <div class="box2"></div>
+</div>
+```
+``` css
+.box1{
+  border: 1px solid red;
+  overflow: hidden;
+}
+.box2{
+  width: 100px;
+  height: 100px;
+  background-color: seagreen;
+  float: left;
+}
+``` 
+![示例04](../../.vuepress/public/example04.png)
+> 3. BFC 可以阻止元素被浮动元素覆盖
+``` html
+<div id="box1">我是一个左浮动的元素</div>
+<div id="box2">
+  我没有设置浮动,也没有触发BFC width: 200px;
+  height: 200px;
+  background-color: slategrey;
+</div>
+```
+``` css
+#box1{
+  width: 100px;
+  height: 100px;
+  background-color: skyblue;
+  float: left;
+}
+#box2{
+  width: 200px;
+  height: 200px;
+  background-color: slategrey;
 }
 ```
+![示例05](../../.vuepress/public/example05.png)
+> 因为文本信息不会被浮动元素覆盖,所以会出现文字环绕效果,但第二个元素被浮动元素覆盖了
+``` html
+<div id="box1">我是一个左浮动的元素</div>
+<div id="box2">
+  我没有设置浮动,也没有触发BFC width: 200px;
+  height: 200px;
+  background-color: slategrey;
+</div>
+```
+``` css
+#box1{
+  width: 100px;
+  height: 100px;
+  background-color: skyblue;
+  float: left;
+}
+#box2{
+  width: 200px;
+  height: 200px;
+  background-color: slategrey;
+  overflow: hidden;
+}
+```
+![示例06](../../.vuepress/public/example06.png)
