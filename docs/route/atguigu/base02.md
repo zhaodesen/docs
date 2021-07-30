@@ -761,3 +761,77 @@ body{
 }
 ```
 ![元素层级](../../.vuepress/public/z-index.png)
+## 字体
+>`@font-face` 可以将服务器中的字体直接提供给用户使用
+``` css
+@font-face {
+  font-family: 'my-font';   /* 自定义字体的名字 */
+  src: url('服务器中字体的路径') format('truetype'); /* format字体的格式,一般不用加 */
+}
+.b{
+  font-family: my-font;
+}
+```
+::: danger @font-face带来的问题
+- 加载速度相对于直接使用本地的字体要慢
+- 版权问题,`@font-face`使用的是你提供给客户的非授权字体时侵权,而`font-family`只是建议,使用的是客户本地的字体,你并没有实际提供
+:::
+> 将图标设置成字体,通过`@font-face`引入,这样就可以使用字体形式的图标了
+- [fontawesome-字体图标库](https://fontawesome.com/)
+  - 只需要解压后将`css`和`webfonts`文件夹粘到项目里,然后引入`css/all.css`文件
+  ``` html
+  <!-- 方式一: 实体 -->
+  <i class="fas">&#xfof3;</i>
+  <!-- 方式二: 类名 -->
+  <i class="fas fof3"></i>
+  <!-- 方式三: 伪元素 -->
+  <i></i>
+  ```
+  ``` css
+  li::before{
+    content: '\f1b0';   /* 字体编码 */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+  }
+  ```
+- [iconfont-阿里巴巴矢量图标库](https://www.iconfont.cn/)
+  - 将喜欢的图标入库并添加到项目中,然后下载到本地
+  - 在页面引入`iconfont.css`
+  ``` html
+  <!-- 方式一: 实体 -->
+  <i class="iconfont">&#x361c</i>
+  <!-- 方式二: 类名 -->
+  <i class="iconfont icon-qitalaji"></i>
+  <!-- 方式三: 伪元素 -->
+  <i></i>
+  ```
+  ``` css
+  i::before{
+    content: '\e625';
+    font-family: 'iconfont';
+  }
+  ```
+> 行高(`line height`) 指的是文字占有的实际高度
+- `line-height`可以设置行高,值可以是`px`,`em`,如果是个整数,行高将会是字体的指定倍数
+- 字体框就是字体存在的格子,设置`font-size`实际上就是设置字体框的高度
+- 行高会在字体框的上下平均分配
+- 多行情况下,`行间距 = 行高 - 字体大小`
+- 字体简写,`font: 字体大小/行高 字体` 行高可以省略不写,有默认值
+- `text-align` 文本水平对齐
+- `vertical-align` 文本垂直对齐
+  - `img`在块元素中,底部会有缝隙,这是因为`img`是替换元素,和字体的特点类似,也是按照基线对齐的,只要给`img`设置这个属性,不按照基线对齐就不会有缝隙了
+- `text-decoration` 设置文本修饰,上划线,下划线等
+- `white-space`  设置网页如何处理留白,不换行,保留空白等
+- `text-overflow: ellipsis` 溢出的内容设置省略号 
+``` html
+<p>是的撒多撒奥dsdadsadadasd是的撒多撒奥dsdadsadadasd</p>
+```
+``` css
+p{
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+```
+![溢出的内容设置省略号](../../.vuepress/public/font01.png)
