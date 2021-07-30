@@ -431,17 +431,17 @@ border-radius: 50%;
 父子元素在垂直方向外边距重叠时,子元素设置`margin-top`值会传递给父元素
 :::
 ``` html
-<div id="box1">
-  <div id="box2"></div>
+<div class="box1">
+  <div class="box2"></div>
 </div>
 ```
 ``` css
-#box1{
+.box1{
 width: 100px;
 height: 100px;
 background-color: red;
 }
-#box2{
+.box2{
   width: 50px;
   height: 50px;
   background-color: springgreen;
@@ -449,9 +449,9 @@ background-color: red;
 }
 ```
 ![外边距重叠](../../.vuepress/public/example07.png)
-> 使用`::before` + `display: table` 可以解决这种问题
+> - 使用`::before` + `display: table` 可以解决这种问题
 ``` css
-#box1::before{
+.box1::before{
   content: '';
   display: table;
 }
@@ -460,10 +460,15 @@ background-color: red;
 `clearfix` 这个样式可以同时解决高度塌陷和外边距重叠的问题
 :::
 ``` html
-<div id="box1 clearfix">
-  <div id="box2"></div>
+<div class="box1 clearfix">
+  <div class="box2"></div>
 </div>
 ```
+> - `::before` 创建一个伪元素，其将成为匹配选中的元素的第一个子元素,默认为行内元素
+> - `::after`创建一个伪元素，作为已选中元素的最后一个子元素,默认是行内元素
+> - `content` 为内容,有内容`box1`和`box2`外边距就不相邻了就不重叠了,但是会显示内容
+> - `display: table` 指定对象作为块元素级的表格
+> - `clear: both;` 清除浮动对伪元素的影响,不会被覆盖(子元素是浮动的情况下)
 ``` css
 .clearfix::before,
 .clearfix::after{
@@ -614,3 +619,145 @@ p{
 }
 ```
 ![示例06](../../.vuepress/public/example06.png)
+## 定位
+- `position`
+- 可选值
+  - `ststic` 默认值,没有开启定位
+  - `relative` 相对定位 
+    - 相对于自身
+    - 不设置偏移量`元素`不会发生变化
+    - 会提升元素层级
+    - 不会脱离文档流
+    - 不会改变元素性质
+  - `absolute` 绝对定位
+    - 不设置偏移量`元素的位置`不会发生变化
+    - 会提升元素层级
+    - 会脱离文档流
+    - 会改变元素性质,行内元素变成块元素,块的宽高被内容撑开
+    - 绝对定位是相对于其`包含块`进行定位的
+  - `fixed` 固定定位 
+    - 也是一种绝对定位,唯一的不同是永远参照浏览器的视口进行定位
+  - `sticky` 粘滞定位(兼容性不好)
+    - 与相对定位的特点基本一致,不同的是它会在元素到达某个位置时将其固定 
+::: tip 包含块(containing block)
+- 正常文档流中,包含块是离当前元素最近的祖先块元素
+- 绝对定位的包含块是离他最近的开启了定位的祖先元素,如果没有,则是根元素(`html`)
+:::
+### 绝对定位元素布局
+> 水平方向布局
+- `left + margin-left/right + border-left/right + padding-left/right + width + right = 包含块的内容区的宽度` 
+- 可设置`auto`的值为:`margin,width,left,right`
+``` html 
+<div class="box1">
+  <div class="box2"></div>
+</div>
+```
+``` css
+  .box1{
+    width: 300px;
+    height: 300px;
+    background-color: aqua;
+    position: relative;
+  }
+  .box2{
+    width: 100px;
+    height: 100px;
+    background-color: antiquewhite;
+    position:absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+```
+![绝对定位水平居中](../../.vuepress/public/horizontal.png)
+> 垂直方向布局
+- `top + margin-top/bottom + border-top/bottom + padding-top/bottom + height + bottom = 包含块的内容区的高度` 
+``` html 
+<div class="box1">
+  <div class="box2"></div>
+</div>
+```
+``` css
+  .box1{
+    width: 300px;
+    height: 300px;
+    background-color: aqua;
+    position: relative;
+  }
+  .box2{
+    width: 100px;
+    height: 100px;
+    background-color: antiquewhite;
+    position:absolute;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+``` 
+![绝对定位垂直居中](../../.vuepress/public/vertical.png)
+
+> 垂直水平居中
+``` html 
+<div class="box1">
+  <div class="box2"></div>
+</div>
+```
+``` css
+  .box1{
+    width: 300px;
+    height: 300px;
+    background-color: aqua;
+    position: relative;
+  }
+  .box2{
+    width: 100px;
+    height: 100px;
+    background-color: antiquewhite;
+    position:absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+``` 
+![绝对定位居中](../../.vuepress/public/center.png)
+### 元素层级
+> - 如果元素的层级一样,优先显示靠下的元素
+> - 祖先元素的层级再高也不会覆盖后代元素
+> - `z-index` 可以控制元素的层级,只对定位元素有效
+``` html
+<div class="box1">1</div>
+<div class="box2">2</div>
+<div class="box3">3</div>
+```
+``` css
+body{
+  font-size: 30px;
+}
+.box1 {
+  width: 100px;
+  height: 100px;
+  background-color: aqua;
+  position: absolute;
+}
+.box2{
+  width: 100px;
+  height: 100px;
+  background-color:rgba(255, 20, 10, 0.5);
+  position: absolute;
+  left: 30px;
+  top: 30px;
+}
+.box3{
+  width: 100px;
+  height: 100px;
+  background-color:rgba(255, 200, 10,1);
+  position: absolute;
+  left: 60px;
+  top: 60px;
+}
+```
+![元素层级](../../.vuepress/public/z-index.png)

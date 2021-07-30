@@ -11,7 +11,8 @@ const nav = [
       { text: 'JavaScript', link: '/study/javaScript/' },
       { text: 'HTML', link: '/study/html/' },
       { text: 'CSS', link: '/study/css/' },
-      { text: 'Git', link: '/study/git/base01' }
+      { text: 'Git', link: '/study/git/base01' },
+      { text: 'Vue3', link: '/study/vue3/base01' }
     ],
   },
   {
