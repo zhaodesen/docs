@@ -835,3 +835,23 @@ p{
 }
 ```
 ![溢出的内容设置省略号](../../.vuepress/public/font01.png)
+## 背景
+``` css
+/* 背景颜色 */
+background-color: aquamarine;     /* 背景颜色 */
+background-image: url("xx.png");  /* 背景图片 */
+background-repeat: repeat-x;      /* 背景重复方式 */
+background-position: 10px 20px;   /* 背景图片位置 */
+background-clip: border-box;      /* 元素的背景（背景图片或颜色）是否延伸到边框、内边距盒子、内容盒子下面 */
+background-origin: border-box;    /* 指定背景图片原点位置的背景相对区域*/
+background-size: 100%;            /* 设置背景图片大小 */
+background-attachment: scroll;    /* 决定背景图像的位置是在视口内固定，或者随着包含它的区块滚动 */
+/* 
+背景的简写属性,没有顺序要求,也没有哪个属性是必写的,但要注意:
+1. background-size 必须写在 background-position 的后边并用`/`隔开
+2. background-origin 要在 background-clip 前面
+*/
+```
+- 图片属于网页中的外部资源,外部资源都需要浏览器单独发送请求加载,浏览器加载外部资源时时按需加载的
+- 可以将多个小图片统一保存到一个大图片中,然后调整`background-position`来显示相应的图片,这种图片会同时加载到网页中,可以有效避免出现闪烁的问题,这种技术在网页中应用广泛,被称为`css-sprite`,这种图我们称为雪碧图
+> 一次性将多个图片加载进页面,降低请求次数,加快访问速度,提升用户体验
