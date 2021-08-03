@@ -858,7 +858,11 @@ background-attachment: scroll;    /* 决定背景图像的位置是在视口内�
 ## 渐变
 > - 实现从一个颜色向其他颜色过渡的效果
 > - 渐变是颜色,但拥有图片的特性,需要通过`background-image`来设置
-1. `linear-gradient()` 函数构建一系列垂直于渐变线的着色线
+
+### 线性渐变
+1. `linear-gradient()` 函数构建一系列**垂直**于渐变线的着色线
+  - 第一个参数控制方向,可以是`to top`,`to right top`,`90deg`,`0.5turn`
+  - 可以同时指定多个颜色,默认平均分配,也可以手动分配
 ``` css
 /* 渐变轴为45度，从蓝色渐变到红色 */
 background-image: linear-gradient(45deg, blue, red);
@@ -866,4 +870,36 @@ background-image: linear-gradient(45deg, blue, red);
 background-image: linear-gradient(to left top, blue, red);
 /* 从下到上，从蓝色开始渐变、到高度40%位置是绿色渐变开始、最后以红色结束 */
 background-image: linear-gradient(0deg, blue, green 40%, red);
+/* 从上到下，从红色50px处开始渐变、到60px位置是灰色渐变开始到结束 */
+background-image: linear-gradient(red 50px,#eee 60px);
+```
+2. `repeating-linear-gradient()` 在所有方向上重复渐变以覆盖其整个容器
+> 比如从 `red 50px`开始,`blue 60px`结束,`60-50=10`,将这`10px`的渐变重复覆盖整个容器
+### 径向渐变
+
+1. `radial-gradient()` 创建了一个图像，该图像是由从原点发出的两种或者多种颜色之间的逐步过渡组成。它的形状可以是`圆形（circle）`或`椭圆形（ellipse）`
+ - `radial-gradient(大小 at 位置, 颜色 位置, 颜色 位置, 颜色 位置, ...)`
+   - 大小: 
+      - `circle 圆形`
+      - `ellipse 椭圆形`
+      - `closest-side 近边`
+      - `closest-corner 近角` 
+      - `farthest-side 远边`
+      - `farthest-corner 远角`
+      - 也可以是像素值
+   - 位置:
+     - `top`
+     - `right`
+     - `left`
+     - `bottom` 
+     - 可以是像素值
+``` css
+/* 径向渐变的宽高为10px */
+background-image: radial-gradient(10px 10px,red,blue)
+/* 径向渐变的形状为圆形 */
+background-image: radial-gradient(circle,red,blue)
+/* 径向渐变的形状为椭圆形 */
+background-image: radial-gradient(ellipse,red,blue)
+/* at后面的值设置径向渐变的位置 */
+background-image: radial-gradient(10px 10px at 10px 0,red,blue)
 ```
