@@ -153,3 +153,168 @@ frameborder 指定内联框架的边框
 <!-- 方式三 -->
 <embed src="./source/audio.mp4" type="audio/mp4">
 ```
+## 表格
+### 基础表格
+``` html
+<table border="1" width="50%" align="center">
+  <!-- tr 表示行 -->
+  <tr>        
+    <!-- td 表示单元格 -->
+    <td>1</td>
+    <td>2</td>
+    <td>2</td>
+    <!-- 纵向合并单元格 -->
+    <td rowspan="2">3</td>
+  </tr>
+  <tr>
+    <!-- 横向合并单元格 -->
+    <td colspan="2">1</td>
+    <td>2</td>
+  </tr>
+</table>
+```
+![table](../../.vuepress/public/table.png)
+### 长表格
+``` html
+<table border="1" width="50%" align="center">
+  <!-- 头部 -->
+  <thead>
+    <tr>
+      <!-- 表示头部单元格 有字体加粗,居中的效果 -->
+      <th>111</th>
+      <th>111</th>
+    </tr>
+  </thead>
+  <!-- 主体 -->
+  <tbody>
+    <tr>
+      <td>22</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <td>33</td>
+      <td>33</td>
+    </tr>
+  </tbody>
+  <!-- 底部 -->
+  <tfoot>
+    <tr>
+      <td>合计</td>
+      <td>44</td>
+    </tr>
+</tfoot>
+</table>
+```
+![长表格](../../.vuepress/public/lang-table.png)
+### 表格样式
+``` html
+<table>
+  <tr>
+    <td>11</td>
+    <td>11</td>
+    <td>11</td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>22</td>
+    <td>22</td>
+  </tr>
+</table>
+```
+``` css
+table{
+  width: 50%;
+  margin: 0 auto;
+  border: 1px solid black;
+  /* 指定边距的距离 */
+  /* border-spacing: 0px; */
+  /* 设置边框合并 */
+  border-collapse: collapse;
+}
+td{
+  border: 1px solid black;
+  height: 30px;
+  /* 默认情况下,元素在td中是垂直居中的 ,可以下面属性修改(只有td可以修改子元素,其他只能修改文字)*/
+  vertical-align: middle;
+  text-align: center;
+}
+/* 虽然表格中没有使用tbody,但浏览器自动创建了,并将tr都放到了里面,所以tr不是table的子元素 */
+/* table > tr:nth-child(odd) {
+  background-color: cadetblue;
+} */
+tbody > tr:nth-child(odd) {
+  background-color: cadetblue;
+}
+```
+![长表格](../../.vuepress/public/table-style.png)
+
+>依赖表格单元格可以修改子元素的特性,可以进行下面的操作
+``` html
+<div class="box1">
+  <!-- 行内元素,文字 -->
+  <span>555span</span>
+</div>
+```
+``` css
+.box1{
+  width: 200px;
+  height: 200px;
+  background-color: chartreuse;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+```
+![文字居中](../../.vuepress/public/text-center.png)
+
+``` html
+<div class="box1">
+  <div class="box2"></div>
+</div>
+```
+``` css
+.box1 {
+  width: 200px;
+  height: 200px;
+  background-color: chartreuse;
+  /* 将其设置为单元格 td */
+  display: table-cell;
+  vertical-align: middle;
+}
+.box2 {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  margin: 0 auto;
+}
+```
+![嵌套块元素居中](../../.vuepress/public/block-element-center.png)
+## 表单
+``` html
+<!-- action 远程地址 -->
+<form action="a.html">
+  <!-- 
+    name 为提交时的键 
+    value 为值
+  -->
+  账号:<input type="text" name="username">
+  <br><br>
+  密码:<input type="text" name="password">
+  <br><br>
+  单选按钮 <input type="radio" name="sex" value="男">
+  <input type="radio" name="sex" value="女">
+  <br><br>
+  多选框
+  <input type="checkbox" name="apple" value="苹果">
+  <input type="checkbox" name="banana" value="香蕉">
+  <br><br>
+  下拉列表
+  <select name="variety">
+    <option value="fish">鱼类</option>
+    <option value="birds">鸟类</option>
+  </select>
+  <br><br>
+  <input type="submit" value="完成">
+</form>
+```
+![表单](../../.vuepress/public/form.png)
