@@ -903,3 +903,31 @@ background-image: radial-gradient(ellipse,red,blue)
 /* at后面的值设置径向渐变的位置 */
 background-image: radial-gradient(10px 10px at 10px 0,red,blue)
 ```
+## 小技巧
+> css 方式实现小三角
+``` html
+<div></div>
+```
+``` css
+body{
+ background-color: teal;
+}
+div {
+  width: 0px;
+  height: 0px;
+  border: 10px solid transparent; /* 四条边框透明 */
+  border-bottom-color: white;
+}
+``` 
+![三角](../../.vuepress/public/triangle.png)
+
+> 隐藏元素,这种方式可以设置动画
+``` css
+height: 0;
+overflow: hidden;
+/* transition: height 3s; */
+```
+> 隐藏文字
+``` css
+text-indent: -100px;
+```
