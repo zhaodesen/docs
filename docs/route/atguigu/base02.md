@@ -931,3 +931,95 @@ overflow: hidden;
 ``` css
 text-indent: -100px;
 ```
+> 设置网站图标
+``` html
+<link rel="icon" href="./favicon.ico">
+```
+## 动画
+### `transition` 过渡
+> 需要触发条件,比如鼠标移入等
+``` css
+div {
+   /* 要过渡的属性,多个属性逗号隔开,all表示所有属性 */
+  transition-property: width, height; 
+  /* 过渡持续时间,s 和 ms,可以分别指定 */
+  transition-duration: 2s, 1s;  
+  /* 过渡的执行方式
+     可选值:
+      ease  默认值  慢速开始,先加速,再减速
+      linear 均速
+      ease-in 加速
+      ease-out 减速
+      ease-in-out 先加速 后加速
+      cubic-bezier() 贝塞尔曲线
+      steps(1)  分步过渡
+  */
+  transition-timing-function: ease; 
+  /* 过渡效果的延迟,等待一段时间再执行 */
+  transition-delay: 10s;  
+  /* 简写,如果有延迟时间,那么第一个是持续时间,第二个是延迟时间 */
+  transition: width 2s 2s;
+}
+```
+### 动画
+> 前提要设置一个关键帧,它设置了动画执行的每个步骤
+``` html
+<div class="box1">
+  <div class="box2"></div>
+</div>
+```
+``` css
+/* 关键帧 */
+@keyframes test {
+  /* 也可以使用百分比 */
+  /* 动画开始 */
+  from {
+    margin-left: 0;
+  }
+  /* 动画结束 */
+  to {
+    margin-left: 400px;
+  }
+}
+
+.box1 {
+  width: 500px;
+  height: 500px;
+  background-color: aquamarine
+}
+
+.box2 {
+  width: 100px;
+  height: 100px;
+  background-color: black;
+  /* 使用的关键帧的名字 */
+  animation-name: test;
+  /* 动画持续时间 */
+  animation-duration: 2s;
+  /* 动画延迟 */
+  animation-delay: 0;
+  /* 动画执行方式 */
+  animation-timing-function: ease;
+  /* 动画执行次数  infinite 无限执行*/
+  animation-iteration-count: infinite;
+  /* 动画方向 
+      normal  从 from 到 to
+      reverse 从 to 到 from
+      alternate 从 from 到 to  来回反复
+      alternate-reverse 从 to 到 from 来回反复
+  */
+  animation-direction: alternate-reverse;
+  /* 动画执行状态
+      running    默认  动画执行
+      paused     动画暂停
+  */
+  animation-play-state: paused;
+  /* 动画填充模式
+      none 默认值  动画执行完毕回到原来位置
+      forwards     元素会停在动画结束位置
+      backwards    动画开启延迟,元素会直接处于动画开始位置
+      both         结合了forwards 和 backwards
+  */
+  animation-fill-mode: both;
+}
+```
