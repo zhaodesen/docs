@@ -1,7 +1,7 @@
 ---
 home: true
 # heroImage: /hero.png
-heroText: 志在必得
+heroText: 绝知此事要躬行
 tagline: 业精于勤荒于嬉,行成于思毁于随
 actionText: 快速进入 →
 actionLink: /life/

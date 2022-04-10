@@ -12,13 +12,15 @@ const nav = [
       { text: 'HTML', link: '/study/html/' },
       { text: 'CSS', link: '/study/css/' },
       { text: 'Git', link: '/study/git/base01' },
-      { text: 'Vue3', link: '/study/vue3/base01' }
+      { text: 'Vue', link: '/study/vue/base01' },
+      { text: 'English', link: '/study/english/base01' }
     ],
   },
   {
     text: '路线',
     items: [
-      { text: '尚硅谷', link: '/route/atguigu/base01' }
+      { text: '尚硅谷', link: '/route/atguigu/base01' },
+      { text: 'coderwhy', link: '/route/coderwhy/base01' }
     ],
   },
   {
