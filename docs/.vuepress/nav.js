@@ -25,7 +25,15 @@ const nav = [
     text: "进阶",
     items: [{ text: "Sass", link: "/advance/scss/base01" }],
   },
-  { text: "读书笔记", link: "/readingNote/" },
+  {
+    text: "读书笔记",
+    items: [
+      {
+        text: "HTML5权威指南",
+        link: "/readingNote/theDefinitiveGuideToHTML5/part1",
+      },
+    ],
+  },
   { text: "问题", link: "/issue/" },
   {
     text: "GitHub",
