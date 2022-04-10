@@ -1023,3 +1023,61 @@ div {
   animation-fill-mode: both;
 }
 ```
+> 小球下落效果
+``` html
+<div class="box1">
+  <div class="box2"></div>
+</div>
+```
+``` css
+.box1 {
+  width: 400px;
+  height: 400px;
+  border-bottom: 10px solid rgb(230, 8, 8);
+  overflow: hidden;
+}
+
+.box2 {
+  width: 100px;
+  height: 100px;
+  background-color: rgb(36, 190, 88);
+  border-radius: 50%;
+  animation: run 2s forwards ease-in;
+}
+
+@keyframes run {
+  from {
+    margin-top: 0;
+  }
+  20%,66%,to{
+    margin-top: 300px;
+    animation-timing-function: ease;
+  }
+  40%{
+    margin-top: 200px;
+  }
+  80% {
+    margin-top: 250px;
+  }
+}
+```
+### 变形  `transform`
+> 改变元素的形状或位置,不会影响页面布局
+ - 可选值:
+  - translateX(100px)   相对于自身沿x轴平移100PX
+  - translateY(50%)     相对于自身沿y轴平移50%
+  - translateZ()          沿z轴平移
+
+> 不设置宽高的元素水平垂直居中
+``` html
+<div class="box3">水平垂直居中</div>
+```
+``` css
+.box3 {
+  background-color: aqua;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%), translateY(-50%);
+}
+```
