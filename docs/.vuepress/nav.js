@@ -34,7 +34,15 @@ const nav = [
       },
     ],
   },
-  { text: "问题", link: "/issue/" },
+  {
+    text: "专栏",
+    items: [
+      {
+        text: "浏览器工作原理与实践",
+        link: "/special-column/browser/base01",
+      },
+    ],
+  },
   {
     text: "GitHub",
     items: [
