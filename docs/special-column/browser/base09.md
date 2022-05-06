@@ -14,7 +14,7 @@ var myName = " 极客时间 ";
 foo();
 ```
 
-![scope-chain-one](.../../../../.vuepress/public/special-column/browser/scope-chain-one.png)
+![scope-chain-one](../../../../.vuepress/public/special-column/browser/scope-chain-one.png)
 
 也许你的第一反应是按照调用栈的顺序来查找变量，查找方式如下：
 
@@ -30,7 +30,7 @@ foo();
 当一段代码使用了一个变量时，`JavaScript` 引擎首先会在**当前的执行上下文**中查找该变量，
 比如上面那段代码在查找 `myName`变量时，如果在当前的变量环境中没有查找到，那么 `JavaScript` 引擎会继续在 `outer` 所指向的执行上下文中查找
 
-![scope-chain-two](.../../../../.vuepress/public/special-column/browser/scope-chain-two.png)
+![scope-chain-two](../../../../.vuepress/public/special-column/browser/scope-chain-two.png)
 
 从图中可以看出，`bar`函数和 `foo` 函数的 `outer`都是指向全局上下文的，这也就意味着如果在 `bar` 函数或者 `foo`函数中使用了外部变量，那么 `JavaScript`引擎会去全局执行上下文中查找。我们把这个查找的链条就称为**作用域链**。
 
@@ -40,7 +40,7 @@ foo();
 ## 词法作用域
 
 词法作用域就是指作用域是由代码中函数声明的位置来决定的，所以词法作用域是静态的作用域，通过它就能够预测代码在执行过程中如何查找标识符。
-![lexical-scope-one](.../../../../.vuepress/public/special-column/browser/lexical-scope-one.png)
+![lexical-scope-one](../../../../.vuepress/public/special-column/browser/lexical-scope-one.png)
 
 词法作用域是代码阶段就决定好的，和函数是怎么调用的没有关系。
 
@@ -69,7 +69,7 @@ let test = 1;
 foo();
 ```
 
-![block-scope](.../../../../.vuepress/public/special-column/browser/block-scope.png)
+![block-scope](../../../../.vuepress/public/special-column/browser/block-scope.png)
 
 ## 闭包
 
@@ -97,18 +97,18 @@ console.log(bar.getName());
 
 执行到`foo` 函数内部的 `return innerBar` 这行代码时
 
-![closure-one](.../../../../.vuepress/public/special-column/browser/closure-one.png)
+![closure-one](../../../../.vuepress/public/special-column/browser/closure-one.png)
 根据词法作用域的规则，内部函数`getName`和`setName`总是可以访问它们的外部函数`foo` 中的变量
 
 `foo`函数执行完成之后，其执行上下文从栈顶弹出了，但是由于返回的 `setName` 和 `getName`方法中使用了 `foo`函数内部的变量，所以这两个变量被保存在`foo` 函数的闭包中。而且除了 `setName` 和`getName`函数之外，其他任何地方都无法访问
-![closure-two](.../../../../.vuepress/public/special-column/browser/closure-two.png)
+![closure-two](../../../../.vuepress/public/special-column/browser/closure-two.png)
 
 在 `JavaScript` 中，根据词法作用域的规则，内部函数总是可以访问其外部函数中声明的变量，当通过调用一个外部函数返回一个内部函数后，即使该外部函数已经执行结束了，但是内部函数引用外部函数的变量依然保存在内存中，我们就把这些变量的集合称为闭包。比如外部函数是`foo`，那么这些变量的集合就称为 `foo`函数的闭包。
 
 当执行到 `bar.setName` 方法中的`myName = "极客邦"`这句代码时，`JavaScript`引擎会沿着`当前执行上下文–>foo 函数闭包–> 全局执行上下文`的顺序来查找`myName` 变量
-![closure-two](.../../../../.vuepress/public/special-column/browser/closure-two.png)
+![closure-two](../../../../.vuepress/public/special-column/browser/closure-two.png)
 
-![closure-browser](.../../../../.vuepress/public/special-column/browser/closure-browser.png)
+![closure-browser](../../../../.vuepress/public/special-column/browser/closure-browser.png)
 
 当调用 `bar.getName` 的时候，右边 `Scope` 项就体现出了作用域链的情况：`Local`就是当前的 `getName`函数的作用域，`Closure(foo)` 是指 `foo`函数的闭包，最下面的`Global`就是指全局作用域，从`Local–>Closure(foo)–>Global`就是一个完整的作用域链。
 
