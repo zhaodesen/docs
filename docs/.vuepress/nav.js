@@ -12,6 +12,7 @@ const nav = [
       { text: "Git", link: "/study/git/base01" },
       { text: "Vue", link: "/study/vue/base01" },
       { text: "English", link: "/study/english/base01" },
+      { text: "TypeScript", link: "/study/typescript/base01" },
     ],
   },
   {
